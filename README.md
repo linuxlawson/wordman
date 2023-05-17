@@ -8,14 +8,13 @@ I have installed on my system:
 - tkinter  
 - DB Browser for SQLite (SQLite3)  
 
-  
+<br>
 
-What it does:  
-Saves username and passwords to a database.
-
+**What it does:**  
+Saves username and passwords to a database.  
 database = wordman.db  
 
-To use:  
+**To use:**  
 1. Fill in the fields provided (account, username, password).  
 2. `Add Entry` to add entry to database.  
 3. `View List` to view entries.  
