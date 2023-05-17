@@ -3,11 +3,12 @@ Password Manager
 
 
 To create and use this program  
-I have installed on my system:    
-1. Python 3  
-2. tkinter  
-3. DB Browser for SQLite (SQLite3)  
+I have installed on my system:
+- Python 3  
+- tkinter  
+- DB Browser for SQLite (SQLite3)  
 
+  
 
 What it does:  
 Saves username and passwords to a database.
