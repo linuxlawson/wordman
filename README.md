@@ -14,7 +14,6 @@ What it does:
 Saves username and passwords to a database.
 
 database = wordman.db  
-table = words  
 
 To use:  
 1. Fill in the fields provided (account, username, password).  
