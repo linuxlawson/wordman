@@ -1,13 +1,7 @@
 # wordman
 Password Manager
 
-
-To create and use this program  
-I have installed on my system:
-- Python 3  
-- tkinter  
-- DB Browser for SQLite (SQLite3)  
-
+Using Python, tkinter, and SQLite3  
 <br>
 
 **What it does:**  
