@@ -6,12 +6,12 @@ import sqlite3
 
 root = Tk()
 root.title("Wordman")
-root.geometry("500x660")
+root.geometry("520x660")
 root.config(padx=4, pady=4)
 
 # TopFrame
 topframe = Frame(root)
-topframe.grid(padx=0, pady=0)
+topframe.grid(padx=0, pady=0, sticky='w')
 
 # Create database or connect to one
 conn = sqlite3.connect('wordman.db')
@@ -113,7 +113,7 @@ def edit():
     update_btn = Button(editor, text="Update", command=update)
     update_btn.grid(column=1, row=4, sticky='w', padx=0, pady=4, ipadx=2)
 
-    # Close editor window
+    # Close editor window button
     close_btn = Button(editor, text="Close", command=closewin)
     close_btn.grid(column=1, row=4, sticky='e', padx=0, pady=4, ipadx=6)
 
@@ -198,11 +198,11 @@ select_box_lab = Label(topframe, text="  Select ID#", anchor='e')
 select_box_lab.grid(column=1, row=5, padx=4, pady=2)
 
 # Entry boxes
-a_name = Entry(topframe, width=36)
+a_name = Entry(topframe, width=40)
 a_name.grid(column=1, row=1, pady=2, sticky='w')
-u_name = Entry(topframe, width=36)
+u_name = Entry(topframe, width=40)
 u_name.grid(column=1, row=2, pady=2, sticky='w')
-p_word = Entry(topframe, width=36)
+p_word = Entry(topframe, width=40)
 p_word.grid(column=1, row=3, pady=2, sticky='w')
 select_box = Entry(topframe, width=9, font=("arial", 14))
 select_box.grid(column=1, row=5, sticky='e', pady=2, ipadx=2)
