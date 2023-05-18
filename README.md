@@ -1,12 +1,12 @@
 # wordman
-Password Manager
+**Password Manager**
 
 Using Python, tkinter, and SQLite3  
 <br>
 
 **What it does:**  
-Saves username and passwords to a database.  
-database = wordman.db  
+Saves usernames and passwords to a database.  
+<br>
 
 **To use:**  
 1. Fill in the fields provided (account, username, password).  
@@ -21,7 +21,7 @@ ID#'s are the last number of each entry.
 After every Added, Edited, or Deleted entry,  
 the View List button must be clicked to see updates.  
 Think of it as a Refresh button.  
-
+<br>
 
 Notes:   
 View List will only show 20+ entries in app itself.  
