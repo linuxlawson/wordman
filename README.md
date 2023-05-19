@@ -27,9 +27,6 @@ Notes:
 View List will only show 20+ entries in app itself.  
 All entries will still be saved/visible in database.  
 
-There is a glitch in program where long entries (i.e.-passwords)  
-when shortened, will leave left-over text in window.  
-This will go away after closing/re-opening program.  
 
 There is no encryption on this program so shouldn't be used at work, school,   
 but should be fine for personal at home use.  
