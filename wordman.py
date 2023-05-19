@@ -114,7 +114,7 @@ def edit():
     update_btn.grid(column=1, row=4, sticky='w', padx=0, pady=4, ipadx=2)
 
     # Close editor window button
-    close_btn = Button(editor, text="Close", command=closewin)
+    close_btn = Button(editor, text="Close", command=lambda:[hide(), closewin()])
     close_btn.grid(column=1, row=4, sticky='e', padx=0, pady=4, ipadx=6)
 
 
@@ -156,8 +156,10 @@ def clear():
     p_word.delete(0, 'end')
     a_name.focus_set()
 
+
 # View function
 def view():
+    global view_label
     # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
@@ -179,6 +181,11 @@ def view():
     # Commit/close
     conn.commit()
     conn.close()
+
+def hide():
+    global view_label
+    view_label.destroy()
+
 
 # GUI    
 # Title/Side labels
