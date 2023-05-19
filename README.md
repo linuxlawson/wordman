@@ -1,5 +1,5 @@
 # Wordman
-**Password Manager**
+**Password Manager**  
 using Python, tkinter, and SQLite3  
 <br>
 
