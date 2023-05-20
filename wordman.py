@@ -26,7 +26,6 @@ c.execute("""CREATE TABLE IF NOT EXISTS words (
         Password text
         )""")
 
-
 # Update Entry Function
 def update():
     # Create database or connect to one
@@ -66,7 +65,7 @@ def edit():
     global editor 
     editor = tk.Tk()
     editor.title("Editor")
-    editor.geometry("480x214")
+    editor.geometry("520x214")
     editor.config(padx=4, pady=4)
 
     # Create database or connect to one
@@ -96,11 +95,11 @@ def edit():
     global p_word_ed
 
     # Entry boxes
-    a_name_ed = tk.Entry(editor, width=36)
+    a_name_ed = tk.Entry(editor, width=40)
     a_name_ed.grid(column=1, row=1, pady=2)
-    u_name_ed = tk.Entry(editor, width=36)
+    u_name_ed = tk.Entry(editor, width=40)
     u_name_ed.grid(column=1, row=2, pady=2)
-    p_word_ed = tk.Entry(editor, width=36)
+    p_word_ed = tk.Entry(editor, width=40)
     p_word_ed.grid(column=1, row=3, pady=2)
     
     #loop thru results
@@ -159,8 +158,8 @@ def clear():
 
 # View function
 def view():
-    global view_label
     # Create database or connect to one
+    global view_label
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
@@ -183,13 +182,13 @@ def view():
     conn.close()
 
 def hide():
-    global view_label
     view_label.destroy()
+    #print_entries = []
 
 
 # GUI    
-# Title/Side labels
-a_title = tk.Label(topframe, text="Password Manager", font='Helvetica 10 bold', fg='#555555')
+# Title/Side label
+a_title = tk.Label(topframe, text="Password Manager", font='Arial 10 bold', fg='#555555')
 a_title.grid(column=1, row=0, padx=2, pady=4)
 entries = tk.Label(root, text="Entries:", anchor='w')
 entries.grid(column=0, row=7, padx=4, pady=(15,0), sticky='nw')
@@ -201,8 +200,8 @@ u_name_label = tk.Label(topframe, text="Username:", anchor='w')
 u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
 p_word_label = tk.Label(topframe, text="Password:", anchor='w')
 p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
-select_box_lab = tk.Label(topframe, text="  Select ID#", anchor='e')
-select_box_lab.grid(column=1, row=5, padx=4, pady=2)
+select_box_lab = tk.Label(topframe, text="Select ID#", anchor='e')
+select_box_lab.grid(column=1, row=5, padx=(50,0), pady=2)
 
 # Entry boxes
 a_name = tk.Entry(topframe, width=40)
