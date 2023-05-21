@@ -1,6 +1,6 @@
 # Wordman
 **Password Manager**  
-using Python, tkinter, and SQLite3  
+Using Python, tkinter, and SQLite3  
 <br>
 
 **What it does:**  
