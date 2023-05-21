@@ -113,7 +113,7 @@ def edit():
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor window button
-    close_btn = tk.Button(editor, text="Close", command=lambda:[hide(), closewin()])
+    close_btn = tk.Button(editor, text="Close", command=lambda:[view(), closewin()])
     close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
@@ -171,7 +171,7 @@ def view():
     # Loop thru results
     print_entries = ''
     for entry in entries:
-        print_entries += str(entry) + "\n"
+        print_entries += str(entry).replace("'", "") + "\n"
 
     view_label = tk.Label(root, text=print_entries, justify='left')
     view_label.config(text=print_entries, pady=0)
@@ -231,7 +231,7 @@ delete_btn = tk.Button(topframe, text="Delete", command=delete, width='9')
 delete_btn.grid(column=1, row=6, padx=0, pady=4, sticky='e')
 
 # Edit button
-edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9')
+edit_btn = tk.Button(topframe, text="Edit Entry", command=lambda:[hide(), edit()], width='9')
 edit_btn.grid(column=1, row=6, padx=0, pady=4, sticky='w')
 
 
