@@ -17,8 +17,8 @@ Saves usernames and passwords to a database.
 
 ID#'s are the last number of each entry.  
 
-After every Added, Edited, or Deleted entry,  
-the View List button must be clicked to see updates.  
+After Added or Deleted entries,  
+the View List button must be clicked to see changes.  
 Think of it as a Refresh button.  
 <br>
 
