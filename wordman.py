@@ -171,7 +171,7 @@ def view():
     # Loop thru results
     print_entries = ''
     for entry in entries:
-        print_entries += str(entry).replace("'", "") + "\n"
+        print_entries += str(entry).replace("'", "").replace("(", "").replace(")", "") + "\n"
 
     view_label = tk.Label(root, text=print_entries, justify='left')
     view_label.config(text=print_entries, pady=0)
