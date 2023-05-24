@@ -6,7 +6,7 @@ import sqlite3
 
 root = tk.Tk()
 root.title("Wordman")
-root.geometry("520x660")
+root.geometry("510x660")
 root.config(padx=4, pady=4)
 
 # TopFrame
@@ -48,7 +48,7 @@ def update():
         })
     
     # Message in editor window
-    win_label = tk.Label(editor, text="Update complete.", anchor='w', fg='#555555')
+    win_label = tk.Label(editor, text="Update complete.", fg="#555555")
     win_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
 
     # Commit/close changes
@@ -59,13 +59,30 @@ def update():
 def closewin():
     editor.destroy()
 
+def clos():
+    err.destroy()
+
+def error_win():
+    global err 
+    err = tk.Tk()
+    err.title("Empty ID#")
+    err.geometry("180x110")
+    err.config(padx=4, pady=4)
+
+# Error window for empty ID# in delete
+    err_label = tk.Label(err, text="\nMust Provide ID#", fg="#555555")
+    err_label.grid(column=0, row=0, padx=24, pady=4)
+
+# Empty ID# error window
+    err_btn = tk.Button(err, text="Ok", command=clos)
+    err_btn.grid(column=0, row=1, padx=24, pady=4)
 
 # Editor Window
 def edit():
     global editor 
     editor = tk.Tk()
     editor.title("Editor")
-    editor.geometry("520x214")
+    editor.geometry("510x214")
     editor.config(padx=4, pady=4)
 
     # Create database or connect to one
@@ -78,15 +95,15 @@ def edit():
     entries = c.fetchall()
 
     # Editor window label
-    win_label = tk.Label(editor, text="Entry #" + (entry_id), anchor='w', fg='#555555')
+    win_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
     win_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
 
     # Entry box labels
-    a_name_label = tk.Label(editor, text="Account:", anchor='w')
+    a_name_label = tk.Label(editor, text="Account:")
     a_name_label.grid(column=0, row=1, padx=4, pady=2, sticky='w')
-    u_name_label = tk.Label(editor, text="Username:", anchor='w')
+    u_name_label = tk.Label(editor, text="Username:")
     u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
-    p_word_label = tk.Label(editor, text="Password:", anchor='w')
+    p_word_label = tk.Label(editor, text="Password:")
     p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
     
     # Global variables for Entry Box names
@@ -113,7 +130,7 @@ def edit():
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor window button
-    close_btn = tk.Button(editor, text="Close", command=lambda:[view(), closewin()])
+    close_btn = tk.Button(editor, text="Close", command=lambda:[closewin(), view()])
     close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
@@ -122,10 +139,15 @@ def delete():
     # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    
-    # Delete entry*
-    c.execute("DELETE from words WHERE oid=" + select_box.get())
-      
+          
+    # For empty select ID# entry box
+    if select_box.index("end") == 0:
+        #print("Must provide ID#")
+        error_win()        
+        select_box.focus_set()
+    else:
+        c.execute("DELETE from words WHERE oid=" + select_box.get()) 
+
     # Commit/close
     conn.commit()
     conn.close()
@@ -188,51 +210,51 @@ def hide():
 
 # GUI    
 # Title/Side label
-a_title = tk.Label(topframe, text="Password Manager", font='Arial 10 bold', fg='#555555')
+a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold", fg="#555555")
 a_title.grid(column=1, row=0, padx=2, pady=4)
-entries = tk.Label(root, text="Entries:", anchor='w')
+entries = tk.Label(root, text="Entries:")
 entries.grid(column=0, row=7, padx=4, pady=(15,0), sticky='nw')
 
 # Entry box labels
-a_name_label = tk.Label(topframe, text="Account:", anchor='w')
+a_name_label = tk.Label(topframe, text="Account:")
 a_name_label.grid(column=0, row=1, padx=4, pady=2, sticky='w')
-u_name_label = tk.Label(topframe, text="Username:", anchor='w')
+u_name_label = tk.Label(topframe, text="Username:")
 u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
-p_word_label = tk.Label(topframe, text="Password:", anchor='w')
+p_word_label = tk.Label(topframe, text="Password:")
 p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
-select_box_lab = tk.Label(topframe, text="Select ID#", anchor='e')
+select_box_lab = tk.Label(topframe, text="Select ID#")
 select_box_lab.grid(column=1, row=5, padx=(50,0), pady=2)
 
 # Entry boxes
 a_name = tk.Entry(topframe, width=40)
-a_name.grid(column=1, row=1, pady=2, sticky='w')
+a_name.grid(column=1, row=1, pady=2)
 u_name = tk.Entry(topframe, width=40)
-u_name.grid(column=1, row=2, pady=2, sticky='w')
+u_name.grid(column=1, row=2, pady=2)
 p_word = tk.Entry(topframe, width=40)
-p_word.grid(column=1, row=3, pady=2, sticky='w')
+p_word.grid(column=1, row=3, pady=2)
 select_box = tk.Entry(topframe, width=9, font=("arial", 14))
 select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
 
 
 # Add button
 add_btn = tk.Button(topframe, text="Add Entry", command=add, width='9')
-add_btn.grid(column=1, row=4, padx=0, pady=4, sticky='w')
+add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
 # Clear button
 clear_btn = tk.Button(topframe, text="Clear", command=clear, width='9')
-clear_btn.grid(column=1, row=4, padx=0, pady=4, sticky='e')
+clear_btn.grid(column=1, row=4, pady=4, sticky='e')
 
 # View button
 view_btn = tk.Button(topframe, text="View List", command=view, width='9')
-view_btn.grid(column=1, row=5, padx=0, pady=4, sticky='w')
+view_btn.grid(column=1, row=5, pady=4, sticky='w')
 
 # Delete button
 delete_btn = tk.Button(topframe, text="Delete", command=delete, width='9')
-delete_btn.grid(column=1, row=6, padx=0, pady=4, sticky='e')
+delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 # Edit button
 edit_btn = tk.Button(topframe, text="Edit Entry", command=lambda:[hide(), edit()], width='9')
-edit_btn.grid(column=1, row=6, padx=0, pady=4, sticky='w')
+edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 
 
 conn.commit()
