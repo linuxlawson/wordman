@@ -55,6 +55,7 @@ def update():
     conn.commit()
     conn.close()
 
+
 # For close window button in editor
 def closewin():
     editor.destroy()
@@ -79,11 +80,18 @@ def error_win():
 
 # Editor Window
 def edit():
-    global editor 
-    editor = tk.Tk()
-    editor.title("Editor")
-    editor.geometry("510x214")
-    editor.config(padx=4, pady=4)
+# For empty select ID# entry box
+    if select_box.index("end") == 0:
+        #print("Must provide ID#")
+        error_win()
+        view()        
+        select_box.focus_set()
+    else:
+        global editor 
+        editor = tk.Tk()
+        editor.title("Editor")
+        editor.geometry("510x214")
+        editor.config(padx=4, pady=4)
 
     # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
@@ -203,10 +211,6 @@ def view():
     conn.commit()
     conn.close()
 
-def hide():
-    view_label.destroy()
-    #print_entries = []
-
 
 # GUI    
 # Title/Side label
@@ -253,7 +257,7 @@ delete_btn = tk.Button(topframe, text="Delete", command=delete, width='9')
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 # Edit button
-edit_btn = tk.Button(topframe, text="Edit Entry", command=lambda:[hide(), edit()], width='9')
+edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9')
 edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 
 
