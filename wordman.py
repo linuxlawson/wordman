@@ -15,8 +15,6 @@ topframe.grid(padx=0, pady=0, sticky='w')
 
 # Create database or connect to one
 conn = sqlite3.connect('wordman.db')
-
-# cursor
 c = conn.cursor()
 
 # Create table
@@ -28,7 +26,6 @@ c.execute("""CREATE TABLE IF NOT EXISTS words (
 
 # Update Entry Function
 def update():
-    # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
@@ -59,7 +56,7 @@ def update():
 def closewin():
     editor.destroy()
 
-# close EmptyID window
+# close emptyID window
 def closeid():
     emp.destroy()
 
@@ -79,7 +76,7 @@ def empty_idwin():
 
 # Editor Window
 def edit():
-    # For empty ID# entry box
+    # for empty ID# entry box
     if select_box.index("end") == 0:
         print("Must provide ID#")
         view()
@@ -92,14 +89,16 @@ def edit():
         editor.geometry("510x214")
         editor.config(padx=4, pady=4)
 
-    # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-
+    try:
     # Select oid# from database
-    entry_id = select_box.get()
-    c.execute("SELECT * FROM words WHERE oid=" + entry_id)
-    entries = c.fetchall()
+        entry_id = select_box.get()
+        c.execute("SELECT * FROM words WHERE oid=" + entry_id)
+        entries = c.fetchall()
+    except sqlite3.OperationalError:
+        # escape input error
+        return
 
     # Editor label
     win_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
@@ -141,13 +140,12 @@ def edit():
     close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
-# Delete entry by oid#
+# Delete entry by id#
 def delete():
-    # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
-    # For empty ID# entry box
+    # for empty ID# entry box
     if select_box.index("end") == 0:
         print("Must provide ID#")
         empty_idwin()
@@ -161,7 +159,6 @@ def delete():
 
 # Add Entry Function
 def add():
-    # Create database or connect to one
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
@@ -176,7 +173,7 @@ def add():
     conn.commit()
     conn.close()
 
-# Clear entry boxes
+# Clear entry fields
 def clear():
     a_name.delete(0, 'end')
     u_name.delete(0, 'end')
@@ -186,15 +183,13 @@ def clear():
 
 # View function
 def view():
-    # Create database or connect to one
     global view_label
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
-    # View database, oid = id#
+    # View database
     c.execute("SELECT *, oid FROM words")
     entries = c.fetchall()
-    #print(entries)
 
     # Loop thru results
     print_entries = ''
@@ -210,7 +205,7 @@ def view():
 
 
 # GUI
-# Title/Side label
+# Top/Side labels
 a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold", fg="#555555")
 a_title.grid(column=1, row=0, padx=2, pady=4)
 entries = tk.Label(root, text="Entries:")
