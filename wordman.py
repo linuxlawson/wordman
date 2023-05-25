@@ -21,198 +21,195 @@ c = conn.cursor()
 
 # Create table
 c.execute("""CREATE TABLE IF NOT EXISTS words (
-        Account text,
-        Username text,
-        Password text
-        )""")
+		Account text,
+		Username text,
+		Password text
+		)""")
 
 # Update Entry Function
 def update():
-    # Create database or connect to one
-    conn = sqlite3.connect('wordman.db')
-    c = conn.cursor()
+	# Create database or connect to one
+	conn = sqlite3.connect('wordman.db')
+	c = conn.cursor()
 
-    entry_id = select_box.get()
- 
-    c.execute("""UPDATE words SET
-        Account = :acc,
-        Username = :user,
-        Password = :pword
+	entry_id = select_box.get()
 
-        WHERE oid = :oid""",
-        {
-        'acc': a_name_ed.get(),
-        'user': u_name_ed.get(),
-        'pword': p_word_ed.get(),
-        'oid': entry_id
-        })
-    
-    # Message in editor window
-    win_label = tk.Label(editor, text="Update complete.", fg="#555555")
-    win_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
+	c.execute("""UPDATE words SET
+		Account = :acc,
+		Username = :user,
+		Password = :pword
 
-    # Commit/close changes
-    conn.commit()
-    conn.close()
+		WHERE oid = :oid""",
+		{
+		'acc': a_name_ed.get(),
+		'user': u_name_ed.get(),
+		'pword': p_word_ed.get(),
+		'oid': entry_id
+		})
+
+	# Message in editor window
+	win_label = tk.Label(editor, text="Update complete.", fg="#555555")
+	win_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
+
+	conn.commit()
+	conn.close()
 
 
-# For close window button in editor
+# close editor window
 def closewin():
-    editor.destroy()
+	editor.destroy()
 
-def clos():
-    err.destroy()
+# close EmptyID window
+def closeid():
+	emp.destroy()
 
-def error_win():
-    global err 
-    err = tk.Tk()
-    err.title("Empty ID#")
-    err.geometry("180x110")
-    err.config(padx=4, pady=4)
+def empty_idwin():
+	global emp 
+	emp = tk.Tk()
+	emp.title("Empty ID#")
+	emp.geometry("180x110")
+	emp.config(padx=4, pady=4)
 
-# Error window for empty ID# in delete
-    err_label = tk.Label(err, text="\nMust Provide ID#", fg="#555555")
-    err_label.grid(column=0, row=0, padx=24, pady=4)
+# Empty ID# message
+	emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
+	emp_label.grid(column=0, row=0, padx=24, pady=4)
+	emp_btn = tk.Button(emp, text="Ok", command=closeid)
+	emp_btn.grid(column=0, row=1, padx=24, pady=4)
 
-# Empty ID# error window
-    err_btn = tk.Button(err, text="Ok", command=clos)
-    err_btn.grid(column=0, row=1, padx=24, pady=4)
 
 # Editor Window
 def edit():
-# For empty select ID# entry box
-    if select_box.index("end") == 0:
-        #print("Must provide ID#")
-        error_win()
-        view()        
-        select_box.focus_set()
-    else:
-        global editor 
-        editor = tk.Tk()
-        editor.title("Editor")
-        editor.geometry("510x214")
-        editor.config(padx=4, pady=4)
+	# For empty ID# entry box
+	if select_box.index("end") == 0:
+		print("Must provide ID#")
+		view()
+		empty_idwin()
+		select_box.focus_set()
+	else:
+		global editor 
+		editor = tk.Tk()
+		editor.title("Editor")
+		editor.geometry("510x214")
+		editor.config(padx=4, pady=4)
 
-    # Create database or connect to one
-    conn = sqlite3.connect('wordman.db')
-    c = conn.cursor()
+	# Create database or connect to one
+	conn = sqlite3.connect('wordman.db')
+	c = conn.cursor()
 
-    # Select oid# from database
-    entry_id = select_box.get()
-    c.execute("SELECT * FROM words WHERE oid = " + entry_id)
-    entries = c.fetchall()
+	# Select oid# from database
+	entry_id = select_box.get()
+	c.execute("SELECT * FROM words WHERE oid=" + entry_id)
+	entries = c.fetchall()
 
-    # Editor window label
-    win_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
-    win_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
+	# Editor label
+	win_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
+	win_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
 
-    # Entry box labels
-    a_name_label = tk.Label(editor, text="Account:")
-    a_name_label.grid(column=0, row=1, padx=4, pady=2, sticky='w')
-    u_name_label = tk.Label(editor, text="Username:")
-    u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
-    p_word_label = tk.Label(editor, text="Password:")
-    p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
-    
-    # Global variables for Entry Box names
-    global a_name_ed
-    global u_name_ed
-    global p_word_ed
+	# Entry box labels
+	a_name_label = tk.Label(editor, text="Account:")
+	a_name_label.grid(column=0, row=1, padx=4, pady=2, sticky='w')
+	u_name_label = tk.Label(editor, text="Username:")
+	u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
+	p_word_label = tk.Label(editor, text="Password:")
+	p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
 
-    # Entry boxes
-    a_name_ed = tk.Entry(editor, width=40)
-    a_name_ed.grid(column=1, row=1, pady=2)
-    u_name_ed = tk.Entry(editor, width=40)
-    u_name_ed.grid(column=1, row=2, pady=2)
-    p_word_ed = tk.Entry(editor, width=40)
-    p_word_ed.grid(column=1, row=3, pady=2)
-    
-    #loop thru results
-    for entry in entries:
-        a_name_ed.insert(0, entry[0])
-        u_name_ed.insert(0, entry[1])
-        p_word_ed.insert(0, entry[2])
+	# Global variables for Entry Box names
+	global a_name_ed
+	global u_name_ed
+	global p_word_ed
 
-    # Update entry button
-    update_btn = tk.Button(editor, text="Update", command=update)
-    update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
+	# Entry boxes
+	a_name_ed = tk.Entry(editor, width=40)
+	a_name_ed.grid(column=1, row=1, pady=2)
+	u_name_ed = tk.Entry(editor, width=40)
+	u_name_ed.grid(column=1, row=2, pady=2)
+	p_word_ed = tk.Entry(editor, width=40)
+	p_word_ed.grid(column=1, row=3, pady=2)
 
-    # Close editor window button
-    close_btn = tk.Button(editor, text="Close", command=lambda:[closewin(), view()])
-    close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
+	#loop thru results
+	for entry in entries:
+		a_name_ed.insert(0, entry[0])
+		u_name_ed.insert(0, entry[1])
+		p_word_ed.insert(0, entry[2])
+
+	# Update entry button
+	update_btn = tk.Button(editor, text="Update", command=update)
+	update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
+
+	# Close editor button
+	close_btn = tk.Button(editor, text="Close", command=lambda:[closewin(), view()])
+	close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
 # Delete entry by oid#
 def delete():
-    # Create database or connect to one
-    conn = sqlite3.connect('wordman.db')
-    c = conn.cursor()
-          
-    # For empty select ID# entry box
-    if select_box.index("end") == 0:
-        #print("Must provide ID#")
-        error_win()        
-        select_box.focus_set()
-    else:
-        c.execute("DELETE from words WHERE oid=" + select_box.get()) 
+	# Create database or connect to one
+	conn = sqlite3.connect('wordman.db')
+	c = conn.cursor()
 
-    # Commit/close
-    conn.commit()
-    conn.close()
+	# For empty ID# entry box
+	if select_box.index("end") == 0:
+		print("Must provide ID#")
+		empty_idwin()        
+		select_box.focus_set()
+	else:
+		c.execute("DELETE FROM words WHERE oid=" + select_box.get()) 
+
+	conn.commit()
+	conn.close()
+
 
 # Add Entry Function
 def add():
-    # Create database or connect to one
-    conn = sqlite3.connect('wordman.db')
-    c = conn.cursor()
+	# Create database or connect to one
+	conn = sqlite3.connect('wordman.db')
+	c = conn.cursor()
 
-    # Insert into table
-    c.execute("INSERT INTO words VALUES (:a_name, :u_name, :p_word)",
-            {
-                'a_name': a_name.get(),
-                'u_name': u_name.get(),
-                'p_word': p_word.get()
-            })
+	# Insert into table
+	c.execute("INSERT INTO words VALUES (:a_name, :u_name, :p_word)",
+			{
+				'a_name': a_name.get(),
+				'u_name': u_name.get(),
+				'p_word': p_word.get()
+			})
 
-    # Commit/close
-    conn.commit()
-    conn.close()
+	conn.commit()
+	conn.close()
 
 # Clear entry boxes
 def clear():
-    a_name.delete(0, 'end')
-    u_name.delete(0, 'end')
-    p_word.delete(0, 'end')
-    a_name.focus_set()
+	a_name.delete(0, 'end')
+	u_name.delete(0, 'end')
+	p_word.delete(0, 'end')
+	a_name.focus_set()
 
 
 # View function
 def view():
-    # Create database or connect to one
-    global view_label
-    conn = sqlite3.connect('wordman.db')
-    c = conn.cursor()
+	# Create database or connect to one
+	global view_label
+	conn = sqlite3.connect('wordman.db')
+	c = conn.cursor()
 
-    # View the database, oid = id#
-    c.execute("SELECT *, oid FROM words")
-    entries = c.fetchall()
-    #print(entries)
+	# View database, oid = id#
+	c.execute("SELECT *, oid FROM words")
+	entries = c.fetchall()
+	#print(entries)
 
-    # Loop thru results
-    print_entries = ''
-    for entry in entries:
-        print_entries += str(entry).replace("'", "").replace("(", "").replace(")", "") + "\n"
+	# Loop thru results
+	print_entries = ''
+	for entry in entries:
+		print_entries += str(entry).replace("'","").replace("(","").replace(")","") + "\n"
 
-    view_label = tk.Label(root, text=print_entries, justify='left')
-    view_label.config(text=print_entries, pady=0)
-    view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
-        
-    # Commit/close
-    conn.commit()
-    conn.close()
+	view_label = tk.Label(root, text=print_entries, justify='left')
+	view_label.config(text=print_entries, pady=0)
+	view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
+
+	conn.commit()
+	conn.close()
 
 
-# GUI    
+# GUI
 # Title/Side label
 a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold", fg="#555555")
 a_title.grid(column=1, row=0, padx=2, pady=4)
