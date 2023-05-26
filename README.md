@@ -23,8 +23,8 @@ Think of it as a Refresh button.
 <br>
 
 Notes:   
-View List will only show 20+ entries in app itself.  
-All entries will still be saved/visible in database.  
+`View List` will show a partial list in UI itself (20+ entries).  
+All entries will still be saved/stored in database.  
 
 
 There is no encryption on this program so shouldn't be used at work, school,   
