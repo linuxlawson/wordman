@@ -64,15 +64,18 @@ def empty_idwin():
     global emp 
     emp = tk.Tk()
     emp.title("Empty ID#")
-    emp.geometry("180x110")
+    emp.geometry("200x120")
     emp.config(padx=4, pady=4)
 
 # Empty ID# message
     emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
-    emp_label.grid(column=0, row=0, padx=24, pady=4)
+    emp_label.grid(column=0, row=0, padx=34, pady=6)
     emp_btn = tk.Button(emp, text="Ok", command=closeid)
-    emp_btn.grid(column=0, row=1, padx=24, pady=4)
+    emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
+
+def hide():
+    view_label.destroy()
 
 # Editor Window
 def edit():
@@ -132,7 +135,7 @@ def edit():
         p_word_ed.insert(0, entry[2])
 
     # Update entry button
-    update_btn = tk.Button(editor, text="Update", command=update)
+    update_btn = tk.Button(editor, text="Update", command=lambda:[update(), hide()])
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor button
@@ -237,7 +240,7 @@ add_btn = tk.Button(topframe, text="Add Entry", command=add, width='9')
 add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
 # Clear button
-clear_btn = tk.Button(topframe, text="Clear", command=clear, width='9')
+clear_btn = tk.Button(topframe, text="Clear Fields", command=clear, width='9')
 clear_btn.grid(column=1, row=4, pady=4, sticky='e')
 
 # View button
@@ -245,7 +248,7 @@ view_btn = tk.Button(topframe, text="View List", command=view, width='9')
 view_btn.grid(column=1, row=5, pady=4, sticky='w')
 
 # Delete button
-delete_btn = tk.Button(topframe, text="Delete", command=delete, width='9')
+delete_btn = tk.Button(topframe, text="Delete Entry", command=delete, width='9')
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 # Edit button
