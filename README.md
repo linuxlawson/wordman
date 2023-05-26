@@ -11,8 +11,8 @@ Saves usernames and passwords to a database.
 1. Fill in the fields provided (account, username, password).  
 2. `Add Entry` to add entry to database.  
 3. `View List` to view entries.  
-4. `Clear` to clear fields (will not effect database).  
-5. To Delete an entry, enter ID# and click `Delete`.  
+4. `Clear Fields` to clear fields (will not effect database).  
+5. To Delete an entry, enter ID# and click `Delete Entry`.  
 6. To Edit an entry, enter ID# and click `Edit Entry`.  
 
 ID#'s are the last number of each entry.  
