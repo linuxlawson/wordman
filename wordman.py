@@ -11,7 +11,7 @@ root.config(padx=4, pady=4)
 
 # TopFrame
 topframe = tk.Frame(root)
-topframe.grid(padx=0, pady=0, sticky='w')
+topframe.grid(sticky='w')
 
 # Create database or connect to one
 conn = sqlite3.connect('wordman.db')
@@ -53,7 +53,7 @@ def update():
 
 
 # close editor window
-def closewin():
+def closedit():
     editor.destroy()
 
 # close emptyID window
@@ -70,7 +70,7 @@ def empty_idwin():
 # Empty ID# message
     emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
     emp_label.grid(column=0, row=0, padx=34, pady=6)
-    emp_btn = tk.Button(emp, text="Ok", command=closeid)
+    emp_btn = tk.Button(emp, text="Ok", command=lambda:[view(), closeid()])
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
@@ -79,10 +79,9 @@ def hide():
 
 # Editor Window
 def edit():
-    # for empty ID# entry box
+    # for empty ID# field
     if select_box.index("end") == 0:
         print("Must provide ID#")
-        view()
         empty_idwin()
         select_box.focus_set()
     else:
@@ -135,11 +134,11 @@ def edit():
         p_word_ed.insert(0, entry[2])
 
     # Update entry button
-    update_btn = tk.Button(editor, text="Update", command=lambda:[update(), hide()])
+    update_btn = tk.Button(editor, text="Update", command=update)
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor button
-    close_btn = tk.Button(editor, text="Close", command=lambda:[closewin(), view()])
+    close_btn = tk.Button(editor, text="Close", command=lambda:[hide(), closedit(), view()])
     close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
@@ -148,7 +147,7 @@ def delete():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
 
-    # for empty ID# entry box
+    # for empty ID# field
     if select_box.index("end") == 0:
         print("Must provide ID#")
         empty_idwin()
@@ -207,7 +206,6 @@ def view():
     conn.close()
 
 
-# GUI
 # Top/Side labels
 a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold", fg="#555555")
 a_title.grid(column=1, row=0, padx=2, pady=4)
