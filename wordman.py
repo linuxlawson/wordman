@@ -70,12 +70,48 @@ def empty_idwin():
 # Empty ID# message
     emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
     emp_label.grid(column=0, row=0, padx=34, pady=6)
-    emp_btn = tk.Button(emp, text="Ok", command=lambda:[view(), closeid()])
+    emp_btn = tk.Button(emp, text="Ok", command=lambda:[closeid(), view()])
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
 def hide():
     view_label.destroy()
+
+
+# Master password
+password = tk.StringVar()
+def check(event=None):
+    if password.get() == 'skynet':
+        add_btn.config(state='normal')
+        view_btn.config(state='normal')
+        edit_btn.config(state='normal')
+        select_box.config(state='normal')
+        delete_btn.config(state='normal')
+        clear_btn.config(state='normal')
+        top.destroy()
+    else:
+        print("No dice")
+           
+# Toplevel for mp
+top = tk.Toplevel(root)
+top.geometry('323x150+633+232')
+top.title("Master")
+
+mp_lab = tk.Label(top, text="\nMaster Password:", anchor='center')
+mp_lab.grid(column=0, row=0, padx=36, pady=6)
+
+mp_ent = tk.Entry(top, textvariable=password, show="", width=30)
+#mp_ent.config(bg='black', fg='#00FF00', insertbackground='#00FF00') #for linux
+mp_ent.focus_set()
+mp_ent.bind('<Return>', check)
+mp_ent.grid(column=0, row=1, padx='36', pady=2)
+
+mp_btn = tk.Button(top, text="Enter", command=check)
+mp_btn.bind('<Return>', check)
+mp_btn.grid(column=0, row=2, padx=36, pady=8)
+
+top.wm_transient(root)
+
 
 # Editor Window
 def edit():
@@ -229,28 +265,28 @@ u_name = tk.Entry(topframe, width=40)
 u_name.grid(column=1, row=2, pady=2)
 p_word = tk.Entry(topframe, width=40)
 p_word.grid(column=1, row=3, pady=2)
-select_box = tk.Entry(topframe, width=9, font=("arial", 14))
+select_box = tk.Entry(topframe, width=9, font=("arial", 14), state='disabled')
 select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
 
 
 # Add button
-add_btn = tk.Button(topframe, text="Add Entry", command=add, width='9')
+add_btn = tk.Button(topframe, text="Add Entry", command=add, width='9', state='disabled')
 add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
 # Clear button
-clear_btn = tk.Button(topframe, text="Clear Fields", command=clear, width='9')
+clear_btn = tk.Button(topframe, text="Clear Fields", command=clear, width='9', state='disabled')
 clear_btn.grid(column=1, row=4, pady=4, sticky='e')
 
 # View button
-view_btn = tk.Button(topframe, text="View List", command=view, width='9')
+view_btn = tk.Button(topframe, text="View List", command=view, width='9', state='disabled')
 view_btn.grid(column=1, row=5, pady=4, sticky='w')
 
 # Delete button
-delete_btn = tk.Button(topframe, text="Delete Entry", command=delete, width='9')
+delete_btn = tk.Button(topframe, text="Delete Entry", command=delete, width='9', state='disabled')
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 # Edit button
-edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9')
+edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9', state='disabled')
 edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 
 
