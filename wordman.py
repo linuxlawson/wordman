@@ -52,10 +52,6 @@ def update():
     conn.close()
 
 
-# close editor window
-def closedit():
-    editor.destroy()
-
 # close emptyID window
 def closeid():
     emp.destroy()
@@ -77,8 +73,13 @@ def empty_idwin():
 def hide():
     view_label.destroy()
 
+def show():
+    if mp_ent.cget('show') == '':
+        mp_ent.config(show='*')
+    else:
+        mp_ent.config(show='')
 
-# Master password
+# Master password def
 password = tk.StringVar()
 def check(event=None):
     if password.get() == 'skynet':
@@ -90,28 +91,33 @@ def check(event=None):
         clear_btn.config(state='normal')
         top.destroy()
     else:
-        print("No dice")
+        print("Incorrect Password")
            
-# Toplevel for mp
+# Master password window
 top = tk.Toplevel(root)
-top.geometry('323x150+633+232')
+top.geometry('323x140+633+362')#size+position
 top.title("Master")
 
-mp_lab = tk.Label(top, text="\nMaster Password:", anchor='center')
-mp_lab.grid(column=0, row=0, padx=36, pady=6)
+mp_lab = tk.Label(top, text="Master Password:", anchor='center')
+mp_lab.grid(column=0, row=0, padx=34, pady=(18,0), sticky='w')
 
-mp_ent = tk.Entry(top, textvariable=password, show="", width=30)
-#mp_ent.config(bg='black', fg='#00FF00', insertbackground='#00FF00') #for linux
-mp_ent.focus_set()
+mp_ent = tk.Entry(top, textvariable=password, show="*", width=30)
 mp_ent.bind('<Return>', check)
+mp_ent.focus_set()
 mp_ent.grid(column=0, row=1, padx='36', pady=2)
 
 mp_btn = tk.Button(top, text="Enter", command=check)
 mp_btn.bind('<Return>', check)
-mp_btn.grid(column=0, row=2, padx=36, pady=8)
+mp_btn.grid(column=0, row=2, padx=36, pady=(18,0))
+
+show_chk = tk.Checkbutton(top, text='Show/Hide', command=show, indicatoron=1)
+show_chk.grid(column=0, row=0, padx=34, pady=(18,0), sticky='e')
 
 top.wm_transient(root)
 
+# close editor window
+def closedit():
+    editor.destroy()
 
 # Editor Window
 def edit():
