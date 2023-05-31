@@ -4,7 +4,7 @@ Using Python, tkinter, and SQLite3
 <br>
 
 **Update:** Included master password feature to prevent unauthorized use.  
-Current Password = skynet  
+Default Password = skynet  
 Note: Actual database is still accessible to those who know where it is.  
 <br>  
 
