@@ -9,6 +9,8 @@ root.title("Wordman")
 root.geometry("510x660")
 root.config(padx=4, pady=4)
 
+view_label = tk.Label(root)
+
 # TopFrame
 topframe = tk.Frame(root)
 topframe.grid(sticky='w')
@@ -45,8 +47,8 @@ def update():
         })
 
     # Message in editor window
-    win_label = tk.Label(editor, text="Update complete.", fg="#555555")
-    win_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
+    update_label = tk.Label(editor, text="Update complete.", fg="#555555")
+    update_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
 
     conn.commit()
     conn.close()
@@ -56,6 +58,7 @@ def update():
 def closeid():
     emp.destroy()
 
+# EmptyID window
 def empty_idwin():
     global emp 
     emp = tk.Tk()
@@ -66,13 +69,11 @@ def empty_idwin():
 # Empty ID# message
     emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
     emp_label.grid(column=0, row=0, padx=34, pady=6)
-    emp_btn = tk.Button(emp, text="Ok", command=lambda:[closeid(), view()])
+    emp_btn = tk.Button(emp, text="Ok", command=closeid)
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
-def hide():
-    view_label.destroy()
-
+# show/hide asterisks for mp
 def show():
     if mp_ent.cget('show') == '':
         mp_ent.config(show='*')
@@ -90,8 +91,7 @@ def check(event=None):
         delete_btn.config(state='normal')
         clear_btn.config(state='normal')
         top.destroy()
-    else:
-        print("Incorrect Password")
+
            
 # Master password window
 top = tk.Toplevel(root)
@@ -110,27 +110,30 @@ mp_btn = tk.Button(top, text="Enter", command=check)
 mp_btn.bind('<Return>', check)
 mp_btn.grid(column=0, row=2, padx=36, pady=(18,0))
 
-show_chk = tk.Checkbutton(top, text='Show/Hide', command=show, indicatoron=1)
+show_chk = tk.Checkbutton(top, text='Show/Hide', command=show)
 show_chk.grid(column=0, row=0, padx=34, pady=(18,0), sticky='e')
 
 top.wm_transient(root)
 
+
 # close editor window
 def closedit():
     editor.destroy()
+    view_label.destroy()
+
 
 # Editor Window
 def edit():
     # for empty ID# field
     if select_box.index("end") == 0:
-        print("Must provide ID#")
+        #print("Must provide ID#")
         empty_idwin()
         select_box.focus_set()
     else:
         global editor 
         editor = tk.Tk()
         editor.title("Editor")
-        editor.geometry("510x214")
+        editor.geometry("510x214+544+118")
         editor.config(padx=4, pady=4)
 
     conn = sqlite3.connect('wordman.db')
@@ -145,8 +148,8 @@ def edit():
         return
 
     # Editor label
-    win_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
-    win_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
+    id_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
+    id_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
 
     # Entry box labels
     a_name_label = tk.Label(editor, text="Account:")
@@ -180,7 +183,7 @@ def edit():
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor button
-    close_btn = tk.Button(editor, text="Close", command=lambda:[hide(), closedit(), view()])
+    close_btn = tk.Button(editor, text="Close", command=lambda:[closedit(), view()])
     close_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=6, sticky='e')
 
 
@@ -191,7 +194,7 @@ def delete():
 
     # for empty ID# field
     if select_box.index("end") == 0:
-        print("Must provide ID#")
+        #print("Must provide ID#")
         empty_idwin()
         select_box.focus_set()
     else:
@@ -217,6 +220,7 @@ def add():
     conn.commit()
     conn.close()
 
+
 # Clear entry fields
 def clear():
     a_name.delete(0, 'end')
@@ -241,7 +245,7 @@ def view():
         print_entries += str(entry).replace("'","").replace("(","").replace(")","") + "\n"
 
     view_label = tk.Label(root, text=print_entries, justify='left')
-    view_label.config(text=print_entries, pady=0)
+    view_label.config(text=print_entries)
     view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
 
     conn.commit()
