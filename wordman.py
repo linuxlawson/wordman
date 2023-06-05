@@ -91,12 +91,16 @@ def check(event=None):
         delete_btn.config(state='normal')
         clear_btn.config(state='normal')
         top.destroy()
+    else:
+        pw_lbl = tk.Label(top, text="Incorrect Password", anchor='center', fg='maroon')
+        pw_lbl.grid(column=0, row=3, padx=34, pady=(10,0))
+        top.after(1000, pw_lbl.destroy)
 
            
 # Master password window
 top = tk.Toplevel(root)
-top.geometry('323x140+633+362')#size+position
 top.title("Master")
+top.geometry('323x160+633+362')#size+position
 
 mp_lab = tk.Label(top, text="Master Password:", anchor='center')
 mp_lab.grid(column=0, row=0, padx=34, pady=(18,0), sticky='w')
@@ -112,7 +116,6 @@ mp_btn.grid(column=0, row=2, padx=36, pady=(18,0))
 
 show_chk = tk.Checkbutton(top, text='Show/Hide', command=show)
 show_chk.grid(column=0, row=0, padx=34, pady=(18,0), sticky='e')
-
 top.wm_transient(root)
 
 
@@ -127,8 +130,8 @@ def edit():
     # for empty ID# field
     if select_box.index("end") == 0:
         #print("Must provide ID#")
-        empty_idwin()
         select_box.focus_set()
+        empty_idwin()
     else:
         global editor 
         editor = tk.Tk()
@@ -179,7 +182,7 @@ def edit():
         p_word_ed.insert(0, entry[2])
 
     # Update entry button
-    update_btn = tk.Button(editor, text="Update", command=update)
+    update_btn = tk.Button(editor, text="Update", command=lambda:[update()])
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
     # Close editor button
@@ -195,8 +198,8 @@ def delete():
     # for empty ID# field
     if select_box.index("end") == 0:
         #print("Must provide ID#")
-        empty_idwin()
         select_box.focus_set()
+        empty_idwin()
     else:
         c.execute("DELETE FROM words WHERE oid=" + select_box.get()) 
 
@@ -280,7 +283,7 @@ select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
 
 
 # Add button
-add_btn = tk.Button(topframe, text="Add Entry", command=add, width='9', state='disabled')
+add_btn = tk.Button(topframe, text="Add Entry", width='9', state='disabled', command=lambda:[add(), view()])
 add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
 # Clear button
@@ -292,7 +295,7 @@ view_btn = tk.Button(topframe, text="View List", command=view, width='9', state=
 view_btn.grid(column=1, row=5, pady=4, sticky='w')
 
 # Delete button
-delete_btn = tk.Button(topframe, text="Delete Entry", command=delete, width='9', state='disabled')
+delete_btn = tk.Button(topframe, text="Delete Entry", width='9', state='disabled', command=lambda:[delete(), view()])
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 # Edit button
