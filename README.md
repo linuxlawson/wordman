@@ -22,13 +22,10 @@ Saves usernames and passwords to a database.
 
 ID#'s are the last number of each entry.  
 
-After an `Added` or `Deleted` entry,  
-the View List button must be clicked to see changes.  
-Think of it as a Refresh button.  
-<br>
+<br>  
 
-Notes:   
-`View List` will show a partial list in UI itself (20+ entries).  
+**Notes:**     
+`View List` will show only a partial list of entries in UI itself (20+ entries).  
 All entries will still be saved/stored in database.  
 
 
