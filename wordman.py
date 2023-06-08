@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # Password Manager
 
+# Database = wordman.db
+# Table name = words
+# Password = skynet
+
 import tkinter as tk
 import sqlite3
 
@@ -26,7 +30,8 @@ c.execute("""CREATE TABLE IF NOT EXISTS words (
         Password text
         )""")
 
-# Update Entry Function
+
+# Update Entry
 def update():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
@@ -92,17 +97,17 @@ def check(event=None):
         clear_btn.config(state='normal')
         top.destroy()
     else:
-        pw_lbl = tk.Label(top, text="Incorrect Password", anchor='center', fg='maroon')
-        pw_lbl.grid(column=0, row=3, padx=34, pady=(10,0))
-        top.after(1000, pw_lbl.destroy)
+        pw_lbl = tk.Label(top, text="Incorrect Password", fg='maroon')
+        pw_lbl.grid(column=0, row=2, padx=34, pady=(10,0))
+        top.after(1200, pw_lbl.destroy)
 
-           
+
 # Master password window
 top = tk.Toplevel(root)
 top.title("Master")
 top.geometry('323x160+633+362')#size+position
 
-mp_lab = tk.Label(top, text="Master Password:", anchor='center')
+mp_lab = tk.Label(top, text="Master Password:")
 mp_lab.grid(column=0, row=0, padx=34, pady=(18,0), sticky='w')
 
 mp_ent = tk.Entry(top, textvariable=password, show="*", width=30)
@@ -110,9 +115,13 @@ mp_ent.bind('<Return>', check)
 mp_ent.focus_set()
 mp_ent.grid(column=0, row=1, padx='36', pady=2)
 
+
+ph_lbl = tk.Label(top, text=" ")
+ph_lbl.grid(column=0, row=2, padx=34, pady=(10,0))
+
 mp_btn = tk.Button(top, text="Enter", command=check)
 mp_btn.bind('<Return>', check)
-mp_btn.grid(column=0, row=2, padx=36, pady=(18,0))
+mp_btn.grid(column=0, row=3, padx=36, pady=(8,0))
 
 show_chk = tk.Checkbutton(top, text='Show/Hide', command=show)
 show_chk.grid(column=0, row=0, padx=34, pady=(18,0), sticky='e')
@@ -123,7 +132,6 @@ top.wm_transient(root)
 def closedit():
     editor.destroy()
     view_label.destroy()
-
 
 # Editor Window
 def edit():
@@ -150,7 +158,7 @@ def edit():
         # escape input error
         return
 
-    # Editor label
+    # Editor id# label
     id_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
     id_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
 
@@ -181,7 +189,7 @@ def edit():
         u_name_ed.insert(0, entry[1])
         p_word_ed.insert(0, entry[2])
 
-    # Update entry button
+    # Update edited entry button
     update_btn = tk.Button(editor, text="Update", command=lambda:[update()])
     update_btn.grid(column=1, row=4, padx=0, pady=4, ipadx=2, sticky='w')
 
