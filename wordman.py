@@ -52,7 +52,7 @@ def update():
         })
 
     # Message in editor window
-    update_label = tk.Label(editor, text="Update complete.", fg="#555555")
+    update_label = tk.Label(editor, text="Update complete.", fg='#800000')
     update_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
 
     conn.commit()
@@ -72,7 +72,7 @@ def empty_idwin():
     emp.config(padx=4, pady=4)
 
 # Empty ID# message
-    emp_label = tk.Label(emp, text="\nMust Provide ID#", fg="#555555")
+    emp_label = tk.Label(emp, text="\nMust Provide ID#")
     emp_label.grid(column=0, row=0, padx=34, pady=6)
     emp_btn = tk.Button(emp, text="Ok", command=closeid)
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
@@ -97,7 +97,7 @@ def check(event=None):
         clear_btn.config(state='normal')
         top.destroy()
     else:
-        pw_lbl = tk.Label(top, text="Incorrect Password", fg='maroon')
+        pw_lbl = tk.Label(top, text="Incorrect Password", fg='#800000')
         pw_lbl.grid(column=0, row=2, padx=34, pady=(10,0))
         top.after(1200, pw_lbl.destroy)
 
@@ -159,7 +159,7 @@ def edit():
         return
 
     # Editor id# label
-    id_label = tk.Label(editor, text="Entry #" + (entry_id), fg="#555555")
+    id_label = tk.Label(editor, text="Entry #" + (entry_id), fg='#800000')
     id_label.grid(column=1, row=0, padx=0, pady=(10,4), sticky='w')
 
     # Entry box labels
@@ -264,7 +264,7 @@ def view():
 
 
 # Top/Side labels
-a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold", fg="#555555")
+a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold")
 a_title.grid(column=1, row=0, padx=2, pady=4)
 entries = tk.Label(root, text="Entries:")
 entries.grid(column=0, row=7, padx=4, pady=(15,0), sticky='nw')
