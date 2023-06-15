@@ -7,13 +7,13 @@
 
 import tkinter as tk
 import sqlite3
+import csv
 
 root = tk.Tk()
 root.title("Wordman")
 root.geometry("510x660")
 root.config(padx=4, pady=4)
 
-view_label = tk.Label(root)
 
 # TopFrame
 topframe = tk.Frame(root)
@@ -54,7 +54,6 @@ def update():
     # Message in editor window
     update_label = tk.Label(editor, text="Update complete.", fg='#800000')
     update_label.grid(column=1, row=5, padx=0, pady=(10,4), sticky='w')
-
     conn.commit()
     conn.close()
 
@@ -262,6 +261,31 @@ def view():
     conn.commit()
     conn.close()
 
+#help menu/about
+def about_win(event=None):
+    win = tk.Toplevel()
+    win.title("About")
+    about = tk.Label(win, text="""\nWordman\nPassword Manager
+    \nCreated with Python/Tkinter and SQLite\n\n
+    Saves account names, usernames,\nand passwords to database.
+    List of entries can also be saved\nas a csv document.""")
+    about.pack()
+    clo = tk.Button(win, text="Close", width=4, command=lambda: win.destroy())
+    clo.pack(padx=8, pady=(16,0))
+    win.transient(root)
+    win.geometry('340x270+638+298')
+    win.wait_window()
+
+# Save as .csv file
+def save_csv():
+    csvWriter = csv.writer(open("words.csv", "w"))
+    conn = sqlite3.connect('wordman.db')
+    c = conn.cursor()
+    
+    c.execute("SELECT * FROM words")
+    entries = c.fetchall()
+    csvWriter.writerows(entries)
+
 
 # Top/Side labels
 a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold")
@@ -310,6 +334,28 @@ delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9', state='disabled')
 edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 
+
+# Menu Items
+menu = tk.Menu(root, bd=1, relief='flat')
+root.config(menu=menu, bd=2)
+
+# File
+filemenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="File ", menu=filemenu)
+filemenu.add_command(label="View List", command=view)
+filemenu.add_command(label="Save as CSV", command=save_csv)
+filemenu.add_command(label="Exit", command=lambda: root.destroy())
+
+# Edit
+editmenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Edit ", menu=editmenu)
+editmenu.add_command(label="Edit Entry", command=edit)
+editmenu.add_command(label="Delete Entry", command=delete)
+
+# Help
+editmenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Help ", menu=editmenu)
+editmenu.add_command(label="About", command=about_win)
 
 conn.commit()
 conn.close()
