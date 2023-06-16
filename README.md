@@ -21,8 +21,8 @@ ID#'s are the last number of each entry.
 <br>  
 
 **Added:**  
-Master password window to prevent unauthorized use  (default password: skynet).  
-Option to save as .csv file.
+- Master password window to prevent unauthorized use  (default password: skynet).  
+- Option to save as .csv file.
 
 <br>
 
