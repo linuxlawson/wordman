@@ -268,7 +268,7 @@ def about_win(event=None):
     about = tk.Label(win, text="""\nWordman\nPassword Manager
     \nCreated with Python/Tkinter and SQLite\n\n
     Saves account names, usernames,\nand passwords to database.
-    List of entries can also be saved\nas a csv document.""")
+    List of entries can also be saved\nas a .csv file.""")
     about.pack()
     clo = tk.Button(win, text="Close", width=4, command=lambda: win.destroy())
     clo.pack(padx=8, pady=(16,0))
@@ -279,6 +279,7 @@ def about_win(event=None):
 # Save as .csv file
 def save_csv():
     csvWriter = csv.writer(open("words.csv", "w"))
+    csvWriter.writerow(['Account', 'Username', 'Password'])
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
     
@@ -343,7 +344,7 @@ root.config(menu=menu, bd=2)
 filemenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="File ", menu=filemenu)
 filemenu.add_command(label="View List", command=view)
-filemenu.add_command(label="Save as CSV", command=save_csv)
+filemenu.add_command(label="Save as .csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
 # Edit
