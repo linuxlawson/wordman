@@ -2,11 +2,7 @@
 **Password Manager**  
 Using Python, tkinter, and SQLite3  
 <br>
-
-**Update:** Included master password feature to prevent unauthorized use.  
-Default Password = skynet  
-Note: Actual database is still accessible to those who know where it is.  
-<br>  
+Default Password: skynet
 
 **What it does:**  
 Saves usernames and passwords to a database.  
@@ -24,8 +20,14 @@ ID#'s are the last number of each entry.
 
 <br>  
 
+**Added:**  
+Master password window to prevent unauthorized use  (default password: skynet).  
+Option to save as .csv file.
+
+<br>
+
 **Notes:**     
-`View List` will show only a partial list of entries in UI itself (20+ entries).  
+`View List` will show only a partial list of entries in UI (20+ entries).  
 All entries will still be saved/stored in database.  
 
 
