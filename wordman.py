@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Password Manager
 
-# Database = wordman.db
-# Table name = words
-# Password = skynet
+# Database: wordman.db
+#    Table: words
+# Password: skynet
 
 import tkinter as tk
 import sqlite3
@@ -77,7 +77,7 @@ def empty_idwin():
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
-# show/hide asterisks for mp
+# show/hide *** for mp
 def show():
     if mp_ent.cget('show') == '':
         mp_ent.config(show='*')
@@ -276,16 +276,29 @@ def about_win(event=None):
     win.geometry('340x270+638+298')
     win.wait_window()
 
-# Save as .csv file
+
+# Save as csv file
 def save_csv():
-    csvWriter = csv.writer(open("words.csv", "w"))
-    csvWriter.writerow(['Account', 'Username', 'Password'])
+    ccwriter = csv.writer(open("words.csv", "w"))
+    ccwriter.writerow(['Account', 'Username', 'Password'])
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
     
     c.execute("SELECT * FROM words")
     entries = c.fetchall()
-    csvWriter.writerows(entries)
+    ccwriter.writerows(entries)
+
+# csv confirm window
+    con = tk.Tk()
+    con.title("CSV Save")
+    con.geometry("180x120")
+    con.config(padx=4, pady=4)
+
+# csv save message
+    con_label = tk.Label(con, text="\nCSV file saved")
+    con_label.grid(column=0, row=0, padx=34, pady=6)
+    con_btn = tk.Button(con, text="Ok", command=lambda: con.destroy())
+    con_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
 # Top/Side labels
@@ -344,7 +357,7 @@ root.config(menu=menu, bd=2)
 filemenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="File ", menu=filemenu)
 filemenu.add_command(label="View List", command=view)
-filemenu.add_command(label="Save as .csv", command=save_csv)
+filemenu.add_command(label="Save as csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
 # Edit
