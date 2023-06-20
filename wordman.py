@@ -35,9 +35,7 @@ c.execute("""CREATE TABLE IF NOT EXISTS words (
 def update():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-
     entry_id = select_box.get()
-
     c.execute("""UPDATE words SET
         Account = :acc,
         Username = :user,
@@ -58,26 +56,20 @@ def update():
     conn.close()
 
 
-# close emptyID window
-def closeid():
-    emp.destroy()
-
-# EmptyID window
+# EmptyID window/message
 def empty_idwin():
     global emp 
     emp = tk.Tk()
     emp.title("Empty ID#")
     emp.geometry("200x120")
     emp.config(padx=4, pady=4)
-
-# Empty ID# message
     emp_label = tk.Label(emp, text="\nMust Provide ID#")
     emp_label.grid(column=0, row=0, padx=34, pady=6)
-    emp_btn = tk.Button(emp, text="Ok", command=closeid)
+    emp_btn = tk.Button(emp, text="Ok", command=lambda: emp.destroy())
     emp_btn.grid(column=0, row=1, padx=34, pady=6)
 
 
-# show/hide *** for mp
+# show/hide master password
 def show():
     if mp_ent.cget('show') == '':
         mp_ent.config(show='*')
@@ -114,7 +106,6 @@ mp_ent.bind('<Return>', check)
 mp_ent.focus_set()
 mp_ent.grid(column=0, row=1, padx='36', pady=2)
 
-
 ph_lbl = tk.Label(top, text=" ")
 ph_lbl.grid(column=0, row=2, padx=34, pady=(10,0))
 
@@ -122,7 +113,7 @@ mp_btn = tk.Button(top, text="Enter", command=check)
 mp_btn.bind('<Return>', check)
 mp_btn.grid(column=0, row=3, padx=36, pady=(8,0))
 
-show_chk = tk.Checkbutton(top, text='Show/Hide', command=show)
+show_chk = tk.Checkbutton(top, text="Show", command=show)
 show_chk.grid(column=0, row=0, padx=34, pady=(18,0), sticky='e')
 top.wm_transient(root)
 
@@ -136,7 +127,6 @@ def closedit():
 def edit():
     # for empty ID# field
     if select_box.index("end") == 0:
-        #print("Must provide ID#")
         select_box.focus_set()
         empty_idwin()
     else:
@@ -201,15 +191,12 @@ def edit():
 def delete():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-
     # for empty ID# field
     if select_box.index("end") == 0:
-        #print("Must provide ID#")
         select_box.focus_set()
         empty_idwin()
     else:
         c.execute("DELETE FROM words WHERE oid=" + select_box.get()) 
-
     conn.commit()
     conn.close()
 
@@ -218,7 +205,6 @@ def delete():
 def add():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-
     # Insert into table
     c.execute("INSERT INTO words VALUES (:a_name, :u_name, :p_word)",
             {
@@ -226,7 +212,6 @@ def add():
             'u_name': u_name.get(),
             'p_word': p_word.get()
             })
-
     conn.commit()
     conn.close()
 
@@ -244,7 +229,6 @@ def view():
     global view_label
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-
     # View database
     c.execute("SELECT *, oid FROM words")
     entries = c.fetchall()
@@ -257,7 +241,6 @@ def view():
     view_label = tk.Label(root, text=print_entries, justify='left')
     view_label.config(text=print_entries)
     view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
-
     conn.commit()
     conn.close()
 
@@ -288,13 +271,11 @@ def save_csv():
     entries = c.fetchall()
     ccwriter.writerows(entries)
 
-# csv confirm window
+# csv confirm window/message
     con = tk.Tk()
     con.title("CSV Save")
     con.geometry("180x120")
     con.config(padx=4, pady=4)
-
-# csv save message
     con_label = tk.Label(con, text="\nCSV file saved")
     con_label.grid(column=0, row=0, padx=34, pady=6)
     con_btn = tk.Button(con, text="Ok", command=lambda: con.destroy())
