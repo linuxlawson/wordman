@@ -86,6 +86,8 @@ def check(event=None):
         select_box.config(state='normal')
         delete_btn.config(state='normal')
         clear_btn.config(state='normal')
+        menu.entryconfig(1, state='normal')
+        menu.entryconfig(2, state='normal')
         top.destroy()
     else:
         pw_lbl = tk.Label(top, text="Incorrect Password", fg='#800000')
@@ -248,13 +250,13 @@ def view():
 def about_win(event=None):
     win = tk.Toplevel()
     win.title("About")
-    about = tk.Label(win, text="""\nWordman\nPassword Manager
-    \nCreated with Python/Tkinter and SQLite\n\n
-    Saves account names, usernames,\nand passwords to database.
-    List of entries can also be saved\nas a .csv file.""")
+    about = tk.Label(win, text="""\nWordman\nPassword Manager\n
+    Saves account names, usernames,\nand passwords to a database.
+    List of entries can also be saved\nas a csv file.
+    \n\nCreated with Python/Tkinter and SQLite\n""")
     about.pack()
     clo = tk.Button(win, text="Close", width=4, command=lambda: win.destroy())
-    clo.pack(padx=8, pady=(16,0))
+    clo.pack(padx=8, pady=(10,0))
     win.transient(root)
     win.geometry('340x270+638+298')
     win.wait_window()
@@ -336,16 +338,16 @@ root.config(menu=menu, bd=2)
 
 # File
 filemenu = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="File ", menu=filemenu)
+menu.add_cascade(label="File ", menu=filemenu, state='disabled')
 filemenu.add_command(label="View List", command=view)
 filemenu.add_command(label="Save as csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
 # Edit
-editmenu = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="Edit ", menu=editmenu)
-editmenu.add_command(label="Edit Entry", command=edit)
-editmenu.add_command(label="Delete Entry", command=delete)
+filemenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Edit ", menu=filemenu, state='disabled')
+filemenu.add_command(label="Edit Entry", command=edit)
+filemenu.add_command(label="Delete Entry", command=lambda:[delete(), view()])
 
 # Help
 editmenu = tk.Menu(menu, tearoff=0)
