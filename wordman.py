@@ -88,6 +88,7 @@ def check(event=None):
         clear_btn.config(state='normal')
         menu.entryconfig(1, state='normal')
         menu.entryconfig(2, state='normal')
+        menu.entryconfig(3, state='normal')
         top.destroy()
     else:
         pw_lbl = tk.Label(top, text="Incorrect Password", fg='#800000')
@@ -251,14 +252,14 @@ def about_win(event=None):
     win = tk.Toplevel()
     win.title("About")
     about = tk.Label(win, text="""\nWordman\nPassword Manager\n
-    Saves account names, usernames,\nand passwords to a database.
+    Saves account names, usernames,\nand passwords to a database.\n
     List of entries can also be saved\nas a csv file.
     \n\nCreated with Python/Tkinter and SQLite\n""")
     about.pack()
     clo = tk.Button(win, text="Close", width=4, command=lambda: win.destroy())
     clo.pack(padx=8, pady=(10,0))
     win.transient(root)
-    win.geometry('340x270+638+298')
+    win.geometry('380x300+638+298')
     win.wait_window()
 
 
@@ -344,15 +345,15 @@ filemenu.add_command(label="Save as csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
 # Edit
-filemenu = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="Edit ", menu=filemenu, state='disabled')
-filemenu.add_command(label="Edit Entry", command=edit)
-filemenu.add_command(label="Delete Entry", command=lambda:[delete(), view()])
+editmenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Edit ", menu=editmenu, state='disabled')
+editmenu.add_command(label="Edit Entry", command=edit)
+editmenu.add_command(label="Delete Entry", command=lambda:[delete(), view()])
 
 # Help
-editmenu = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="Help ", menu=editmenu)
-editmenu.add_command(label="About", command=about_win)
+helpmenu = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Help ", menu=helpmenu, state='disabled')
+helpmenu.add_command(label="About", command=about_win)
 
 conn.commit()
 conn.close()
