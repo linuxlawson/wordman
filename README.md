@@ -2,7 +2,7 @@
 **Password Manager**  
 Using Python, tkinter, and SQLite3  
 <br>
-Default Password: skynet
+Master Password: skynet
 
 **What it does:**  
 Saves usernames and passwords to a database.  
