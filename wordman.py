@@ -3,7 +3,7 @@
 
 # Database: wordman.db
 #    Table: words
-# Password: skynet
+# Password: blank
 
 import tkinter as tk
 import sqlite3
@@ -79,7 +79,7 @@ def show():
 # Master password def
 password = tk.StringVar()
 def check(event=None):
-    if password.get() == 'skynet':
+    if password.get() == 'blank':
         add_btn.config(state='normal')
         view_btn.config(state='normal')
         edit_btn.config(state='normal')
@@ -124,7 +124,7 @@ top.wm_transient(root)
 # close editor window
 def closedit():
     editor.destroy()
-    view_label.destroy()
+    view_label.grid_remove()
 
 # Editor Window
 def edit():
@@ -200,6 +200,7 @@ def delete():
         empty_idwin()
     else:
         c.execute("DELETE FROM words WHERE oid=" + select_box.get()) 
+    
     conn.commit()
     conn.close()
 
@@ -215,6 +216,7 @@ def add():
             'u_name': u_name.get(),
             'p_word': p_word.get()
             })
+
     conn.commit()
     conn.close()
 
@@ -232,20 +234,24 @@ def view():
     global view_label
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    # View database
     c.execute("SELECT *, oid FROM words")
     entries = c.fetchall()
 
-    # Loop thru results
+    # Loop results
     print_entries = ''
     for entry in entries:
         print_entries += str(entry).replace("'","").replace("(","").replace(")","") + "\n"
 
-    view_label = tk.Label(root, text=print_entries, justify='left')
-    view_label.config(text=print_entries)
-    view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
+    if is_viewarea.get():
+        view_label = tk.Label(root, text=print_entries, justify='left')
+        view_label.config(text=print_entries)
+        view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
+    else:
+        view_label.grid_remove()
+
     conn.commit()
     conn.close()
+
 
 #help menu/about
 def about_win(event=None):
@@ -312,35 +318,19 @@ select_box = tk.Entry(topframe, width=9, font=("arial", 14), state='disabled')
 select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
 
 
-# Add button
-add_btn = tk.Button(topframe, text="Add Entry", width='9', state='disabled', command=lambda:[add(), view()])
-add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
-# Clear button
-clear_btn = tk.Button(topframe, text="Clear Fields", command=clear, width='9', state='disabled')
-clear_btn.grid(column=1, row=4, pady=4, sticky='e')
-
-# View button
-view_btn = tk.Button(topframe, text="View List", command=view, width='9', state='disabled')
-view_btn.grid(column=1, row=5, pady=4, sticky='w')
-
-# Delete button
-delete_btn = tk.Button(topframe, text="Delete Entry", width='9', state='disabled', command=lambda:[delete(), view()])
-delete_btn.grid(column=1, row=6, pady=4, sticky='e')
-
-# Edit button
-edit_btn = tk.Button(topframe, text="Edit Entry", command=edit, width='9', state='disabled')
-edit_btn.grid(column=1, row=6, pady=4, sticky='w')
-
-
-# Menu Items
+# Menu Items/buttons
 menu = tk.Menu(root, bd=1, relief='flat')
 root.config(menu=menu, bd=2)
 
 # File
 filemenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="File ", menu=filemenu, state='disabled')
-filemenu.add_command(label="View List", command=view)
+
+is_viewarea = tk.BooleanVar()
+is_viewarea.trace('w', lambda *args: view())
+filemenu.add_checkbutton(label="View List", variable=is_viewarea)
+
 filemenu.add_command(label="Save as csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
@@ -348,12 +338,36 @@ filemenu.add_command(label="Exit", command=lambda: root.destroy())
 editmenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="Edit ", menu=editmenu, state='disabled')
 editmenu.add_command(label="Edit Entry", command=edit)
-editmenu.add_command(label="Delete Entry", command=lambda:[delete(), view()])
+editmenu.add_command(label="Delete Entry", command=delete)
 
 # Help
 helpmenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="Help ", menu=helpmenu, state='disabled')
 helpmenu.add_command(label="About", command=about_win)
+
+
+# UI Buttons
+# Add button
+add_btn = tk.Button(topframe, text="Add Entry", width='9', command=add, state='disabled')
+add_btn.grid(column=1, row=4, pady=4, sticky='w')
+
+# Clear button
+clear_btn = tk.Button(topframe, text="Clear Fields", width='9', command=clear,  state='disabled')
+clear_btn.grid(column=1, row=4, pady=4, sticky='e')
+
+# View button
+view_btn = tk.Button(topframe, text="View List", width=9, state='disabled',
+                command=lambda: is_viewarea.set(not is_viewarea.get()))
+view_btn.grid(column=1, row=5, pady=4, sticky='w')
+
+# Delete button
+delete_btn = tk.Button(topframe, text="Delete Entry", width='9', command=delete, state='disabled')
+delete_btn.grid(column=1, row=6, pady=4, sticky='e')
+
+# Edit button
+edit_btn = tk.Button(topframe, text="Edit Entry", width='9', command=edit, state='disabled')
+edit_btn.grid(column=1, row=6, pady=4, sticky='w')
+
 
 conn.commit()
 conn.close()
