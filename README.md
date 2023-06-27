@@ -2,7 +2,7 @@
 **Password Manager**  
 Using Python, tkinter, and SQLite3  
 <br>
-Master Password: skynet
+Master Password: blank
 
 **What it does:**  
 Saves usernames and passwords to a database.  
@@ -17,12 +17,14 @@ Saves usernames and passwords to a database.
 6. To Edit an entry, enter ID# and click `Edit Entry`.  
 
 ID#'s are the last number of each entry.  
+View List button must be used after adding/deleting entries (to see updates).
 
 <br>  
 
 **Added:**  
-- Master password window to prevent unauthorized use  (default password: skynet).  
+- Master password window to prevent unauthorized use  (default password: blank).  
 - Option to save as .csv file.
+- View List button is now toggle-able, and must be used after adding/deleting entries.
 
 <br>
 
