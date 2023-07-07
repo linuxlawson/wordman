@@ -11,13 +11,14 @@ import csv
 
 root = tk.Tk()
 root.title("Wordman")
-root.geometry("510x660")
 root.config(padx=4, pady=4)
 
+#uncomment for fixed size
+#root.geometry("510x660")
 
 # TopFrame
 topframe = tk.Frame(root)
-topframe.grid(sticky='w')
+topframe.grid(padx=(0,60), sticky='w')
 
 # Create database or connect to one
 conn = sqlite3.connect('wordman.db')
