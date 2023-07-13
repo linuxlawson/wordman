@@ -5,7 +5,7 @@ Using Python, tkinter, and SQLite3
 Master Password: blank
 
 **What it does:**  
-Saves usernames and passwords to a database.  
+Saves/stores your usernames and passwords to a database.  
 <br>
 
 **To use:**  
@@ -23,7 +23,7 @@ View List button must be used after adding/deleting entries (to see updates).
 
 **Added:**  
 - Master password window to prevent unauthorized use  (default password: blank).  
-- Option to save as .csv file.
+- Option to save as csv file.
 - View List button is now toggle-able, and must be used after adding/deleting entries.
 
 <br>
