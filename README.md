@@ -5,7 +5,7 @@ Using Python, tkinter, and SQLite3
 Master Password: blank
 
 **What it does:**  
-Saves/stores your usernames and passwords to a database.  
+Saves/stores your account names, usernames, and passwords to a database.  
 <br>
 
 **To use:**  
