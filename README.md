@@ -30,7 +30,7 @@ View List button must be used after adding/deleting entries (to see updates).
 <br>
 
 **Notes:**     
-`View List` will show only a partial list of entries in UI (20+ entries).  
+**`View List`** will show only a partial list of entries in UI (20+ entries).  
 All entries will still be saved/stored in database.  
 
 
