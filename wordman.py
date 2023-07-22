@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # Password Manager
 
 # Database: wordman.db
@@ -10,7 +10,7 @@ import sqlite3
 import csv
 
 root = tk.Tk()
-root.title("Wordman")
+root.title("Wordman Password Manager")
 root.config(padx=4, pady=4)
 
 #uncomment for fixed size
@@ -78,7 +78,7 @@ def show():
     else:
         mp_ent.config(show='')
 
-# Master password def
+# Master password
 password = tk.StringVar()
 def check(event=None):
     if password.get() == 'blank':
@@ -125,7 +125,7 @@ def closedit():
 
 # Editor Window
 def edit():
-    # for empty ID# field
+    # for empty ID field
     if select_box.index("end") == 0:
         empty_idwin()
     else:
@@ -171,7 +171,7 @@ def edit():
     p_word_ed = tk.Entry(editor, width=40)
     p_word_ed.grid(column=1, row=3, pady=2)
 
-    #loop thru results
+    #loop results
     for entry in entries:
         a_name_ed.insert(0, entry[0])
         u_name_ed.insert(0, entry[1])
@@ -204,7 +204,7 @@ def delete():
 def add():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    # Insert into table
+    # insert into table
     c.execute("INSERT INTO words VALUES (:a_name, :u_name, :p_word)",
             {
             'a_name': a_name.get(),
@@ -258,7 +258,7 @@ def about_win(event=None):
     about = tk.Label(win, text="""\nWordman\nPassword Manager\n
     Saves account names, usernames,\nand passwords to a database.\n
     List of entries can also be saved\nas a csv file.
-    \n\nCreated with Python/Tkinter and SQLite\n""")
+    \n\nCreated with Python/tkinter and SQLite\n""")
     about.pack()
     clo = tk.Button(win, text="Close", width=4, command=lambda: win.destroy())
     clo.pack(padx=8, pady=(10,0))
@@ -288,33 +288,29 @@ def save_csv():
     con_btn = tk.Button(con, text="Ok", command=lambda: con.destroy())
     con_btn.grid(column=0, row=1, padx=34, pady=6)
 
-
-# Top/Side labels
-a_title = tk.Label(topframe, text="Password Manager", font="Arial 10 bold")
-a_title.grid(column=1, row=0, padx=2, pady=4)
+# Entries label
 entriez = tk.Label(root, text="Entries:")
 
 
 # Entry box labels
 a_name_label = tk.Label(topframe, text="Account:")
-a_name_label.grid(column=0, row=1, padx=4, pady=2, sticky='w')
+a_name_label.grid(column=0, row=1, padx=4, pady=(4,2), sticky='w')
 u_name_label = tk.Label(topframe, text="Username:")
 u_name_label.grid(column=0, row=2, padx=4, pady=2, sticky='w')
 p_word_label = tk.Label(topframe, text="Password:")
-p_word_label.grid(column=0, row=3, padx=4, pady=2, sticky='w')
+p_word_label.grid(column=0, row=3, padx=4, pady=(2,6), sticky='w')
 select_box_lab = tk.Label(topframe, text="Select ID#")
 select_box_lab.grid(column=1, row=5, padx=(50,0), pady=2)
 
 # Entry boxes
 a_name = tk.Entry(topframe, width=40)
-a_name.grid(column=1, row=1, pady=2)
+a_name.grid(column=1, row=1, pady=(4,2))
 u_name = tk.Entry(topframe, width=40)
 u_name.grid(column=1, row=2, pady=2)
 p_word = tk.Entry(topframe, width=40)
-p_word.grid(column=1, row=3, pady=2)
+p_word.grid(column=1, row=3, pady=(2,6))
 select_box = tk.Entry(topframe, width=9, font=("arial", 14), state='disabled')
 select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
-
 
 
 # Menu Items/buttons
@@ -324,11 +320,9 @@ root.config(menu=menu, bd=2)
 # File
 filemenu = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="File ", menu=filemenu, state='disabled')
-
 is_viewarea = tk.BooleanVar()
 is_viewarea.trace('w', lambda *args: view())
 filemenu.add_checkbutton(label="View List", variable=is_viewarea)
-
 filemenu.add_command(label="Save as csv", command=save_csv)
 filemenu.add_command(label="Exit", command=lambda: root.destroy())
 
@@ -367,7 +361,6 @@ edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 delete_btn = tk.Button(topframe, text="Delete Entry", width='9', 
                 command=delete, state='disabled')
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
-
 
 conn.commit()
 conn.close()
