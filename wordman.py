@@ -12,6 +12,7 @@ import csv
 root = tk.Tk()
 root.title("Wordman Password Manager")
 root.config(padx=4, pady=4)
+root.resizable(0,0)
 
 #uncomment for fixed size
 #root.geometry("510x660")
