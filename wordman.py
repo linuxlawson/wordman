@@ -191,7 +191,6 @@ def edit():
 def delete():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    # for empty ID# field
     if select_box.index("end") == 0:
         empty_idwin()
     else:
@@ -205,7 +204,6 @@ def delete():
 def add():
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    # insert into table
     c.execute("INSERT INTO words VALUES (:a_name, :u_name, :p_word)",
             {
             'a_name': a_name.get(),
