@@ -15,7 +15,7 @@ root.config(padx=4, pady=4)
 root.resizable(0,0)
 
 #uncomment for fixed size
-#root.geometry("510x660")
+root.geometry("510x560")
 
 # TopFrame
 topframe = tk.Frame(root)
