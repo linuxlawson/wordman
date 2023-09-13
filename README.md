@@ -1,12 +1,12 @@
-# Wordman
+## Wordman
 **Password Manager**  
 Using Python, tkinter, and SQLite3  
 <br>
 Master Password: blank
 
 **What it does:**  
-Saves/stores your account names, usernames, and passwords to a database  
-(in case they are forgotten).
+Saves/stores your account names, usernames, and passwords to a database.  
+
 <br>
 
 **To use:**  
@@ -18,20 +18,15 @@ Saves/stores your account names, usernames, and passwords to a database
 6. To Edit an entry, enter ID# and click `Edit Entry`.  
 
 ID#'s are the last number of each entry.  
-View List button must be used after adding/deleting entries (to see updates).
 
 <br>  
 
 **Added:**  
 - Master password window to prevent unauthorized use  (default password: blank).  
 - Option to save as csv file.
-- View List button is now toggle-able, and must be used after adding/deleting entries.
+- View List button will toggle list on/off.
 
 <br>
-
-**Notes:**     
-**`View List`** will show only a partial list of entries in UI (20+ entries).  
-All entries will still be saved/stored in database.  
 
 
 There is no encryption on this program so shouldn't be used at work, school,   
