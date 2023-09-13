@@ -13,8 +13,6 @@ root = tk.Tk()
 root.title("Wordman Password Manager")
 root.config(padx=4, pady=4)
 root.resizable(0,0)
-
-#uncomment for fixed size
 root.geometry("510x560")
 
 # TopFrame
@@ -124,6 +122,7 @@ def closedit():
     editor.destroy()
     view_label.grid_remove()
 
+
 # Editor Window
 def edit():
     # for empty ID field
@@ -196,6 +195,8 @@ def delete():
     else:
         c.execute("DELETE FROM words WHERE oid=" + select_box.get()) 
     
+    view_label.grid_remove()
+
     conn.commit()
     conn.close()
 
@@ -211,6 +212,7 @@ def add():
             'p_word': p_word.get()
             })
 
+    view_label.grid_remove()
     conn.commit()
     conn.close()
 
@@ -241,14 +243,12 @@ def view():
         view_label = tk.Label(root, text=print_entries, justify='left')
         view_label.config(text=print_entries)
         view_label.grid(column=0, row=7, padx=(82,0), pady=(15,0), sticky='nw')
-        entriez.grid(column=0, row=7, padx=4, pady=(15,0), sticky='nw')
     else:
         view_label.grid_remove()
-        entriez.grid_remove()
 
     conn.commit()
     conn.close()
-
+    
 
 #help menu/about
 def about_win(event=None):
@@ -272,7 +272,6 @@ def save_csv():
     ccwriter.writerow(['Account', 'Username', 'Password'])
     conn = sqlite3.connect('wordman.db')
     c = conn.cursor()
-    
     c.execute("SELECT * FROM words")
     entries = c.fetchall()
     ccwriter.writerows(entries)
@@ -287,9 +286,11 @@ def save_csv():
     con_btn = tk.Button(con, text="Ok", command=lambda: con.destroy())
     con_btn.grid(column=0, row=1, padx=34, pady=6)
 
+
 # Entries label
 entriez = tk.Label(root, text="Entries:")
-
+entriez.grid(column=0, row=7, padx=4, pady=(15,0), sticky='nw')
+entriez.grid()
 
 # Entry box labels
 a_name_label = tk.Label(topframe, text="Account:")
@@ -312,7 +313,7 @@ select_box = tk.Entry(topframe, width=9, font=("arial", 14), state='disabled')
 select_box.grid(column=1, row=5, pady=2, sticky='e', ipadx=2)
 
 
-# Menu Items/buttons
+# Menu
 menu = tk.Menu(root, bd=1, relief='flat')
 root.config(menu=menu, bd=2)
 
@@ -339,7 +340,7 @@ helpmenu.add_command(label="About", command=about_win)
 
 # UI Buttons
 # Add button
-add_btn = tk.Button(topframe, text="Add Entry", width='9', command=add, state='disabled')
+add_btn = tk.Button(topframe, text="Add Entry", width='9', command=lambda:[add(), view()], state='disabled')
 add_btn.grid(column=1, row=4, pady=4, sticky='w')
 
 # Clear button
@@ -358,7 +359,7 @@ edit_btn.grid(column=1, row=6, pady=4, sticky='w')
 
 # Delete button
 delete_btn = tk.Button(topframe, text="Delete Entry", width='9', 
-                command=delete, state='disabled')
+                command=lambda:[delete(), view()], state='disabled')
 delete_btn.grid(column=1, row=6, pady=4, sticky='e')
 
 conn.commit()
