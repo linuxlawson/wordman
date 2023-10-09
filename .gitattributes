@@ -1,2 +1,4 @@
+*.py linguist-detectable=false
+
 *.sql linguist-detectable=true
 *.sqlite linguist-language=sql
