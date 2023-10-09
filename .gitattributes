@@ -1,2 +1,2 @@
-*.sql linguist-detectable=true
+*. linguist-detectable=true
 *.sqlite linguist-language=sql
